@@ -1,0 +1,42 @@
+janche:
+  pagesize: 5
+  #  排序属性
+  sortcolumn:  id
+  #  排序规则 1 升序  2 降序
+  sorttype: 1
+  # 跨域ip处理
+  origins: http://localhost:8080,http://192.168.99.100:8091,http://127.0.0.1:8080,http://cebon.hoteas.com:8082
+
+  jwt:
+    secret: janche
+    ttl: 600000
+    remember: 604800000
+
+
+custom:
+  config:
+    ignores:
+      # 需要过滤的 post 请求
+      post:
+        - "/login"
+        - "/logout"
+        - "/refresh/token"
+      # options的请求不拦截
+      options:
+        - "/**"
+      # 需要过滤的请求，不限方法
+      pattern:
+        - "/test/*"
+        - "/css/**"
+        - "/js/**"
+        - "/images/**"
+        - "/fonts/**"
+        - "/favicon.ico"
+        - "/static/**"
+        - "/resources/**"
+        - "/error"
+        - "/status/*"
+        - "/swagger-ui.html"
+        - "/v2/**"
+        - "/webjars/**"
+        - "/swagger-resources/**"

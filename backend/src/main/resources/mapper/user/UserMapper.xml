@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.janche.user.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.janche.user.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="actual_name" jdbcType="VARCHAR" property="actualName" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <resultMap id="UserDTOMap" type="com.example.janche.user.dto.UserDTO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="actual_name" jdbcType="VARCHAR" property="actualName" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+      <!--角色-->
+      <collection javaType="java.util.ArrayList" ofType="com.example.janche.user.domain.Role" property="roles">
+          <id column="rid" jdbcType="BIGINT" property="id" />
+          <result column="description" jdbcType="VARCHAR" property="description" />
+          <result column="rname" jdbcType="VARCHAR" property="name" />
+          <result column="rparent_id" jdbcType="BIGINT" property="parentId" />
+          <result column="rcreate_time" jdbcType="TIMESTAMP" property="createTime" />
+          <result column="rmodify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+          <result column="role_index" jdbcType="VARCHAR" property="roleIndex" />
+      </collection>
+    <!-- 权限菜单 -->
+    <collection javaType="java.util.ArrayList" ofType="com.example.janche.user.domain.MenuRight" property="menus">
+      <id column="mid" jdbcType="BIGINT" property="id" />
+      <result column="mparent_id" jdbcType="BIGINT" property="parentId" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="url" jdbcType="VARCHAR" property="url" />
+      <result column="grades" jdbcType="VARCHAR" property="grades" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="icon" jdbcType="VARCHAR" property="icon" />
+      <result column="method" jdbcType="VARCHAR" property="method" />
+      <result column="grades" jdbcType="INTEGER" property="grades" />
+    </collection>
+  </resultMap>
+
+  <select id="getRolesByUsername" resultMap="UserDTOMap">
+    select
+      u.id,
+      u.username,
+      u.password,
+      u.actual_name,
+      u.sex,
+      u.phone,
+      u.email,
+      u.address,
+      u.post_name,
+      u.status,
+      u.create_time,
+      u.modify_time,
+
+      r.id rid,
+      r.description,
+      r.name rname,
+      r.seq,
+      r.parent_id rparent_id,
+      r.create_time AS rcreate_time,
+      r.modify_time AS rmodify_time,
+      r.role_index,
+
+      m.id mid,
+      m.icon,
+      m.status,
+      m.name,
+      m.grades,
+      m.seq m_seq,
+      m.url,
+      m.method,
+      m.parent_id mparent_id,
+      m.create_time m_create_time,
+      m.modify_time m_modify_time
+    from user u
+    left join user_role ur on u.id = ur.user_id
+    left join role r on ur.role_id = r.id
+    left join role_right rr on r.id = rr.role_id
+    left join menu_right m on rr.menu_id = m.id
+
+    where u.username = #{username}
+    order by m.parent_id;
+  </select>
+</mapper>
