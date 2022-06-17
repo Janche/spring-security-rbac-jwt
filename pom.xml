@@ -26,7 +26,7 @@
         <mybatis.version>3.5.0</mybatis.version>
         <pagehelper.version>4.1.6</pagehelper.version>
         <commons-lang3>3.7</commons-lang3>
-        <fastjson>1.2.47</fastjson>
+        <fastjson>1.2.83</fastjson>
         <commons-beanutils>1.9.3</commons-beanutils>
         <swagger2>2.8.0</swagger2>
     </properties>
