@@ -151,7 +151,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-core</artifactId>
-            <version>4.1.14</version>
+            <version>5.8.19</version>
         </dependency>
 
         <!-- 通用mapper -->
